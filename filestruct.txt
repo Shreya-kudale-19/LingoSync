@@ -1,0 +1,14 @@
+|- LingoSync
+   |- main.py                        # Entry point (FastAPI app)
+   |- app 
+       |- __init__.py
+       |- core/             
+            |translation.py
+       |- routes/
+            |- __init__.py
+            |- translate.py          # Route for text translation
+            |- speech.py             # Route for speech translation
+            |- documents.py          # Handles PDF & DOCX
+            |- image.py              # Handles OCR-based image translation
+   |- uploads/                  # To save uploaded files
+   |- requirements.txt
