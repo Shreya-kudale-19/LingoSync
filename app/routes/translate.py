@@ -3,7 +3,6 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from app.core.translation import translate  # Import the translate function
 
-
 router = APIRouter()
 
 # Request model for translation input

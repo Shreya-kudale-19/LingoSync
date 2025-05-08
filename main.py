@@ -27,7 +27,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="LingoSync API",
-    description="Gitpod Deployment - Multi-modal Translation Service",
+    description="LingoSync Deployment - Multi-modal Translation Service",
     version="1.0.0",
     lifespan=lifespan,
     docs_url="/docs",
@@ -45,6 +45,7 @@ app.add_middleware(
     allow_origins=[
         gitpod_origin,
         "http://localhost:3000",
+        "http://localhost:3001",
         "http://localhost:8000"
     ],
     allow_credentials=True,
