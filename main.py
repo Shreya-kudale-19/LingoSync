@@ -34,12 +34,13 @@ app = FastAPI(
     redoc_url=None,
     servers=[{
         "url": "https://8000-whitedevil201-lingosync-swbz6wg8mci.ws-us118.gitpod.io",
+        "url": "https://8000-whitedevil201-lingosync-kaay4x8p29x.ws-us118.gitpod.io",
         "description": "Gitpod Development Server"
     }]
 )
 
 # CORS Configuration for Gitpod
-gitpod_origin = "https://3000-whitedevil201-lingosync-swbz6wg8mci.ws-us118.gitpod.io"
+gitpod_origin = "https://3000-whitedevil201-lingosync-swbz6wg8mci.ws-us118.gitpod.io", "https://8000-whitedevil201-lingosync-kaay4x8p29x.ws-us118.gitpod.io"
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -83,30 +84,7 @@ def health_check():
     return {
         "status": "running",
         "docs": "https://8000-whitedevil201-lingosync-swbz6wg8mci.ws-us118.gitpod.io/docs",
-        "api_base": "https://8000-whitedevil201-lingosync-swbz6wg8mci.ws-us118.gitpod.io/api"
+        "docs": "https://8000-whitedevil201-lingosync-kaay4x8p29x.ws-us118.gitpod.io//docs",
+        "api_base": "https://8000-whitedevil201-lingosync-swbz6wg8mci.ws-us118.gitpod.io/api",
+        "api_base": "https://8000-whitedevil201-lingosync-kaay4x8p29x.ws-us118.gitpod.io/api"
     }
-# from fastapi import FastAPI
-# from fastapi.middleware.cors import CORSMiddleware
-# from app.routes import documents, image, speech, translate
-
-# app = FastAPI()
-
-# # Allow CORS for all origins (you can restrict this in production)
-
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["http://localhost:3000"],
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
-
-# # Include routers
-# app.include_router(documents.router, prefix="/documents")
-# app.include_router(image.router, prefix="/image")
-# app.include_router(speech.router, prefix="/speech")
-# app.include_router(translate.router, prefix="/translate")
-
-# @app.get("/")
-# def root():
-#     return {"message": "LingoSync FastAPI backend is running."}

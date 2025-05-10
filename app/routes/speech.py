@@ -4,10 +4,11 @@ from fastapi import APIRouter, UploadFile, File, Form, HTTPException
 import os
 import shutil
 import speech_recognition as sr
-from langdetect import detect, LangDetectException
+from langdetect import detect_langs, LangDetectException
 from gtts import gTTS
 from gtts.lang import tts_langs
-from pathlib import Path
+from io import BytesIO
+import base64
 from app.routes.translate import translate_text, TranslationRequest
 from app.utils.lang_utils import get_code, is_supported
 
@@ -17,140 +18,72 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @router.post("/speech-translate")
 async def speech_translate(file: UploadFile = File(...), target_lang: str = Form(...)):
-    # Generate unique filename
+    if not is_supported(target_lang):
+        raise HTTPException(400, f"Language not supported: {target_lang}")
+
     temp_filename = f"temp_{os.urandom(4).hex()}_{file.filename}"
     audio_path = os.path.join(UPLOAD_DIR, temp_filename)
-    
-    try:
-        # Validate language support
-        if not is_supported(target_lang):
-            raise HTTPException(400, f"Language not supported: {target_lang}")
 
-        # Save uploaded audio
+    try:
         with open(audio_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
 
-        # Recognize speech with language hint
         recognizer = sr.Recognizer()
         with sr.AudioFile(audio_path) as source:
             audio_data = recognizer.record(source)
+
             try:
-                transcription = recognizer.recognize_google(
-                    audio_data,
-                    language=get_code(target_lang, 'iso_639_1')  # Helps recognition accuracy
-                )
+                transcription = recognizer.recognize_google(audio_data)
             except sr.UnknownValueError:
-                raise HTTPException(400, "Audio not understandable - possibly wrong language or poor quality")
+                raise HTTPException(400, "Could not understand audio")
             except sr.RequestError as e:
-                raise HTTPException(502, f"Speech API error: {str(e)}")
+                raise HTTPException(502, f"Speech recognition service error: {e}")
 
-        # Detect language with fallback
+        # Detect language from transcription
         try:
-            detected_lang = detect(transcription[:5000])  # Limit for performance
-            bos_source_lang = get_code(detected_lang, 'bos')
-        except (LangDetectException, ValueError):
-            # If detection fails, assume it's in target language
-            bos_source_lang = get_code(target_lang, 'bos')
+            lang_probs = detect_langs(transcription)
+            top_lang = lang_probs[0]
+            if top_lang.prob < 0.7:
+                raise HTTPException(400, f"Low confidence in detected language: {top_lang.lang} ({top_lang.prob:.2f})")
+            detected_lang = top_lang.lang
+        except LangDetectException:
+            raise HTTPException(400, "Could not detect language of transcription")
 
-        # Get proper codes
-        bos_target_lang = get_code(target_lang, 'bos')
-        gtts_lang = get_code(target_lang, 'gtts')
+        bos_source = get_code(detected_lang, 'bos')
+        bos_target = get_code(target_lang, 'bos')
+        gtts_code = get_code(target_lang, 'gtts')
 
-        # Verify TTS support
-        if gtts_lang not in tts_langs():
-            raise HTTPException(400, f"Text-to-speech not available for {target_lang}")
+        if bos_source == bos_target:
+            raise HTTPException(400, "Source and target languages are the same")
 
-        # Translate
+        if gtts_code not in tts_langs():
+            raise HTTPException(400, f"TTS not supported for {target_lang}")
+
         translation = translate_text(TranslationRequest(
             text=transcription,
-            source_lang=bos_source_lang,
-            target_lang=bos_target_lang
+            source_lang=bos_source,
+            target_lang=bos_target
         ))
 
-        # Generate speech output
-        output_filename = f"translated_{gtts_lang}_{os.urandom(2).hex()}.mp3"
-        speech_path = os.path.join(UPLOAD_DIR, output_filename)
-        
         tts = gTTS(
             text=translation["translated_text"],
-            lang=gtts_lang,
-            slow=False  # Faster speech rate
+            lang=gtts_code,
+            slow=False
         )
-        tts.save(speech_path)
+        audio_io = BytesIO()
+        tts.write_to_fp(audio_io)
+        audio_io.seek(0)
+        audio_base64 = base64.b64encode(audio_io.read()).decode("utf-8")
 
         return {
             "transcription": transcription,
-            "detected_language": detected_lang if 'detected_lang' in locals() else target_lang,
+            "detected_language": detected_lang,
             "translated_text": translation["translated_text"],
-            "audio_url": f"/downloads/{output_filename}"
+            "audio_base64": audio_base64
         }
 
-    except HTTPException:
-        raise  # Re-raise existing HTTP exceptions
-    except Exception as e:
-        raise HTTPException(500, f"Processing error: {str(e)}")
     finally:
-        # Clean up temporary files
         if os.path.exists(audio_path):
             os.remove(audio_path)
-# from fastapi import APIRouter, UploadFile, File, Form, HTTPException
-# import os
-# import shutil
-# import speech_recognition as sr
-# from langdetect import detect, LangDetectException
-# from gtts import gTTS
-# from app.routes.translate import translate_text, TranslationRequest
 
-# router = APIRouter()
 
-# UPLOAD_DIR = "uploads"
-# os.makedirs(UPLOAD_DIR, exist_ok=True)
-
-# @router.post("/speech-translate")
-# async def speech_translate(file: UploadFile = File(...), target_lang: str = Form(...)):
-#     try:
-#         # Save uploaded audio
-#         audio_path = os.path.join(UPLOAD_DIR, file.filename)
-#         with open(audio_path, "wb") as buffer:
-#             shutil.copyfileobj(file.file, buffer)
-
-#         # Recognize speech
-#         recognizer = sr.Recognizer()
-#         with sr.AudioFile(audio_path) as source:
-#             audio_data = recognizer.record(source)
-#             try:
-#                 transcription = recognizer.recognize_google(audio_data)
-#             except sr.UnknownValueError:
-#                 raise HTTPException(status_code=400, detail="Could not understand the audio.")
-#             except sr.RequestError:
-#                 raise HTTPException(status_code=500, detail="Speech recognition service error.")
-
-#         # Detect language
-#         try:
-#             source_lang = detect(transcription)
-#         except LangDetectException:
-#             raise HTTPException(status_code=400, detail="Could not detect language of the transcribed text.")
-
-#         # Translate
-#         translation_request = TranslationRequest(
-#             text=transcription,
-#             source_lang=source_lang,
-#             target_lang=target_lang
-#         )
-
-#         translation_response = translate_text(translation_request)
-
-#         # Text-to-speech for translated output
-#         tts = gTTS(translation_response["translated_text"], lang=target_lang)
-#         speech_output_path = os.path.join(UPLOAD_DIR, "translated_speech.mp3")
-#         tts.save(speech_output_path)
-
-#         return {
-#             "transcribed_text": transcription,
-#             "detected_language": source_lang,
-#             "translated_text": translation_response["translated_text"],
-#             "audio_url": f"/download/translated_speech.mp3"
-#         }
-
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
