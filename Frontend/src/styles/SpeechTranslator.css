@@ -1,0 +1,763 @@
+/* SpeechTranslator.css */
+.speech-translator-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.speech-translator-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Dark mode styles */
+body.dark-mode .speech-translator-container {
+  background-color: #1e293b;
+  color: #f1f5f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .speech-translator-title {
+  color: #f8fafc;
+}
+
+body.dark-mode .error-message {
+  background-color: #7f1d1d;
+  color: #fecaca;
+}
+
+body.dark-mode .language-selector {
+  background-color: #334155;
+}
+
+body.dark-mode .language-label {
+  color: #cbd5e1;
+}
+
+.error-message {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border-radius: 0.375rem;
+}
+
+/* Translation section with text areas */
+.translation-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .translation-section {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.language-section {
+  margin-bottom: 0.5rem;
+}
+
+.language-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.language-selector {
+  background-color: #f9fafb;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+}
+
+/* Audio controls grid */
+.audio-controls-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .audio-controls-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.record-section,
+.upload-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.75rem;
+}
+
+/* File Upload */
+.file-upload-area {
+  border: 2px dashed #d1d5db;
+  border-radius: 0.5rem;
+  padding: 2rem 1rem;
+  text-align: center;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.file-upload-area.drag-active {
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+}
+
+.upload-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.upload-icon {
+  width: 3rem;
+  height: 3rem;
+  color: #9ca3af;
+}
+
+.or-divider {
+  font-size: 0.875rem;
+  color: #6b7280;
+  position: relative;
+  width: 100%;
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+.or-divider::before,
+.or-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background-color: #e5e7eb;
+}
+
+.or-divider::before {
+  left: 0;
+}
+
+.or-divider::after {
+  right: 0;
+}
+
+.browse-button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.browse-button:hover {
+  background-color: #2563eb;
+}
+
+.hidden-input {
+  display: none;
+}
+
+.file-formats {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+/* Active audio file display */
+.active-audio-file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.audio-file-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.file-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #3b82f6;
+}
+
+.file-details {
+  max-width: 50vw;
+}
+
+.file-name {
+  font-weight: 500;
+  color: #1f2937;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.audio-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Improved styling for record and play buttons */
+.recorder-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.recording-timer {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #1f2937;
+  font-family: monospace;
+  padding: 0.5rem 1.5rem;
+  background-color: #f3f4f6;
+  border-radius: 0.375rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 0.5rem;
+}
+
+.main-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.record-button, .stop-button, .play-button, .clear-button, .play-translated-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-width: 8.5rem;
+  height: 2.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.record-button {
+  background-color: #ef4444;
+  color: white;
+}
+
+.record-button:hover:not(:disabled) {
+  background-color: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stop-button {
+  background-color: #6b7280;
+  color: white;
+}
+
+.stop-button:hover {
+  background-color: #4b5563;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.play-button, .play-translated-button {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.play-button:hover:not(:disabled), .play-translated-button:hover:not(:disabled) {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.clear-button {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  border: 1px solid #d1d5db;
+}
+
+.clear-button:hover:not(:disabled) {
+  background-color: #e5e7eb;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.record-button:disabled, .play-button:disabled, .clear-button:disabled, .play-translated-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.record-button:active, .stop-button:active, .play-button:active, .clear-button:active, .play-translated-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.record-icon, .stop-icon, .play-icon, .clear-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.hidden-audio {
+  display: none;
+}
+
+/* Audio controls for the source audio playback */
+.audio-controls-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 1rem;
+}
+
+.audio-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  border: none;
+  font-weight: 500;
+  background-color: #3b82f6;
+  color: white;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.audio-control-button:hover:not(:disabled) {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.audio-control-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.audio-control-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.control-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Updated styling for the recorder container */
+.recorder-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+/* Dark mode styles */
+body.dark-mode .recording-timer {
+  background-color: #1e293b;
+  color: #f8fafc;
+}
+
+body.dark-mode .recorder-container {
+  background-color: #0f172a;
+}
+
+body.dark-mode .file-upload-area {
+  border-color: #475569;
+}
+
+body.dark-mode .file-upload-area.drag-active {
+  border-color: #3b82f6;
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+body.dark-mode .upload-icon {
+  color: #64748b;
+}
+
+body.dark-mode .or-divider {
+  color: #94a3b8;
+}
+
+body.dark-mode .or-divider::before,
+body.dark-mode .or-divider::after {
+  background-color: #475569;
+}
+
+body.dark-mode .browse-button {
+  background-color: #3b82f6;
+}
+
+body.dark-mode .browse-button:hover {
+  background-color: #2563eb;
+}
+
+body.dark-mode .file-formats {
+  color: #94a3b8;
+}
+
+body.dark-mode .active-audio-file {
+  background-color: #1e293b;
+  border-color: #475569;
+}
+
+body.dark-mode .file-name {
+  color: #f1f5f9;
+}
+
+body.dark-mode .transcript-container {
+  background-color: #1e293b;
+}
+
+body.dark-mode .transcript-title {
+  color: #f1f5f9;
+}
+
+body.dark-mode .language-tag {
+  color: #94a3b8;
+}
+
+body.dark-mode .transcript-content {
+  color: #e2e8f0;
+  background-color: #0f172a;
+  border-color: #334155;
+}
+
+body.dark-mode .clear-button {
+  background-color: #334155;
+  color: #cbd5e1;
+  border-color: #475569;
+}
+
+body.dark-mode .clear-button:hover:not(:disabled) {
+  background-color: #475569;
+}
+
+body.dark-mode .audio-control-button {
+  background-color: #3b82f6;
+}
+
+body.dark-mode .audio-control-button:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+
+body.dark-mode .translate-button.disabled {
+  background-color: #334155;
+  color: #64748b;
+}
+
+body.dark-mode .translation-result {
+  background-color: #1e293b;
+}
+
+body.dark-mode .translation-title {
+  color: #f1f5f9;
+}
+
+body.dark-mode .download-translation-button {
+  background-color: #10b981;
+}
+
+body.dark-mode .download-translation-button:hover:not(:disabled) {
+  background-color: #059669;
+}
+
+/* Transcript */
+.transcript-container {
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.transcript-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+.language-tag {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: normal;
+}
+
+.transcript-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #3b82f6;
+}
+
+.transcript-content {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #4b5563;
+  white-space: pre-wrap;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 0.375rem;
+  border: 1px solid #e5e7eb;
+  min-height: 6rem;
+}
+
+.play-button.small, .clear-button.small {
+  min-width: auto;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.translate-button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.translate-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.875rem 2rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 12rem;
+}
+
+.translate-button.enabled {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.translate-button.enabled:hover {
+  background-color: #2563eb;
+}
+
+.translate-button.disabled {
+  background-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.translate-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.translate-spinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.translation-result {
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.translation-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Translated audio player styling */
+.translated-audio-container {
+  margin-bottom: 1.5rem;
+}
+
+.audio-player {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.play-translated-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 500;
+  background-color: #3b82f6;
+  color: white;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.play-translated-button:hover:not(:disabled) {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.download-translation-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 500;
+  background-color: #10b981;
+  color: white;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.download-translation-button:hover:not(:disabled) {
+  background-color: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.download-translation-button:disabled, .play-translated-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.download-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.fallback-player {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.fallback-player audio {
+  width: 100%;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+}
+
+body.dark-mode .fallback-player audio {
+  background-color: #1e293b;
+}
+
+/* Add this for language selection grid */
+.language-selection-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .language-selection-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Update the audio input options to be side by side */
+.audio-input-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .audio-input-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+.input-option {
+  flex: 1;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.input-option-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+/* Dark mode styles for new elements */
+body.dark-mode .input-option {
+  background-color: #1e293b;
+}
+
+body.dark-mode .input-option-title {
+  color: #f1f5f9;
+} 

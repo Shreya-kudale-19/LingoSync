@@ -1,0 +1,154 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  /* background-color: #f8fafc; */
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); */
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  background-color: #4f46e5;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.logo span {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-links {
+  display: flex;;
+  list-style: none;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #64748b;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav-links li a:hover, .nav-links li a.active {
+  color: #4f46e5;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-label {
+  font-weight: 600;
+  color: #cbd5e1;
+  transition: color 0.3s ease;
+}
+
+.toggle-label.active {
+  color: #1e293b;
+}
+
+.toggle-switch {
+  width: 60px;
+  height: 34px;
+  background: linear-gradient(to right, #6ca8ff, #69a1ff);
+  border-radius: 999px;
+  position: relative;
+  transition: background 0.3s ease;
+  cursor: pointer;
+}
+
+.toggle-switch.dark {
+  background: #4b5563;
+}
+
+.toggle-circle {
+  width: 26px;
+  height: 26px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch.dark .toggle-circle {
+  transform: translateX(26px);
+}
+
+.dot {
+  position: absolute;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.dot1 {
+  top: 6px;
+  right: 10px;
+  width: 6px;
+  height: 6px;
+}
+
+.dot2 {
+  top: 12px;
+  right: 18px;
+  width: 3px;
+  height: 3px;
+}
+
+/* Dark mode styles */
+/* body.dark-mode .header {
+  background-color: #1e293b;
+} */
+
+body.dark-mode .logo span {
+  color: #f8fafc;
+}
+
+body.dark-mode .nav-links li a {
+  color: #cbd5e1;
+}
+
+body.dark-mode .nav-links li a:hover, 
+body.dark-mode .nav-links li a.active {
+  color: #a5b4fc;
+}
+
+body.dark-mode .toggle-label.active {
+  color: #f8fafc;
+}
