@@ -1,16 +1,35 @@
-# 🌐 LingoSync: A Language Translation Web Application
+# 🌐 LingoSync: Multimodal Language Translation Web App
 
-**LingoSync** is a multilingual web-based translation platform that integrates AI technologies for real-time, accurate translations across text, speech, and images. Designed with inclusivity, performance, and ethical AI in mind, it supports over 100 languages through Facebook’s M2M100 model, Tesseract OCR for image text extraction, and Whisper for speech recognition.
+**LingoSync** is an AI-powered web application that performs real-time multilingual translation across **text**, **images**, and **speech** using state-of-the-art models. It supports 100+ languages and is optimized for speed, accessibility, and bias mitigation.
+
+---
+
+## 🚀 Core Features
+
+- 📝 **Text-to-Text Translation**  
+  Direct many-to-many translation using **Meta’s M2M100** model (no English pivot).
+
+- 🖼️ **Image-to-Text Translation (OCR)**  
+  Extract text from images using **PaddleOCR**, then translate it.
+
+- 🎙️ **Speech-to-Text Translation**  
+  Speech input handled via `SpeechRecognition` (Google/STT API) and translated using M2M100.
+
+- ⚙️ **Bias Mitigation**  
+  Reduces gender and cultural biases through counterfactual data augmentation.
+
+- 🌐 **Multilingual Support**  
+  100+ languages with auto-detection and improved performance for low-resource languages.
 
 ---
 
-## 🔑 Features
+## 🧠 Tech Stack
 
-- **Text-to-Text Translation**: Real-time multilingual translation using M2M100 model without relying on English as a pivot.
-- **Image-to-Text Translation (OCR)**: Extracts and translates text from images using Tesseract OCR.
-- **Speech-to-Text Translation**: Converts spoken audio to translated text using Whisper.
-- **Bias Mitigation**: Includes algorithms to reduce gender and cultural biases in translations.
-- **Auto Language Detection**: Automatically identifies source language for input text.
-- **Modern UI/UX**: Responsive interface with dark mode, accessibility options, and real-time feedback.
-
----
+| Layer        | Tools / Frameworks |
+|--------------|---------------------|
+| **Frontend** | React.js, Bootstrap |
+| **Backend**  | FastAPI, Python 3.11 |
+| **Models**   | M2M100, SpeechRecognition, PaddleOCR |
+| **ML**       | Transformers, Torch, HuggingFace |
+| **Others**   | gTTS, Langdetect, PyPDF2, RapidFuzz |
+| **Deployment** | Docker, Uvicorn |
