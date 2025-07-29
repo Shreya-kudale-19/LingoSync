@@ -29,7 +29,7 @@
 |--------------|---------------------|
 | **Frontend** | React.js, Bootstrap |
 | **Backend**  | FastAPI, Python 3.11 |
-| **Models**   | M2M100, SpeechRecognition, PaddleOCR |
+| **Models**   | NLLB-200, SpeechRecognition, PaddleOCR |
 | **ML**       | Transformers, Torch, HuggingFace |
 | **Others**   | gTTS, Langdetect, PyPDF2, RapidFuzz |
 | **Deployment** | Docker, Uvicorn |
