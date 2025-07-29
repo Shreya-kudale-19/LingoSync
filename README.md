@@ -7,13 +7,15 @@
 ## 🚀 Core Features
 
 - 📝 **Text-to-Text Translation**  
-  Direct many-to-many translation using **Meta’s M2M100** model (no English pivot).
+  Direct many-to-many translation using **FaceBook’s NLLB-200** model (no English pivot).
+  NLLB-200 is a machine translation model primarily intended for research in machine translation, - especially for low-resource languages.
+  It allows for single sentence translation among 200 languages.
 
 - 🖼️ **Image-to-Text Translation (OCR)**  
   Extract text from images using **PaddleOCR**, then translate it.
 
 - 🎙️ **Speech-to-Text Translation**  
-  Speech input handled via `SpeechRecognition` (Google/STT API) and translated using M2M100.
+  Speech input handled via `SpeechRecognition` (Google/STT API) and translated using NLLB-200.
 
 - ⚙️ **Bias Mitigation**  
   Reduces gender and cultural biases through counterfactual data augmentation.
